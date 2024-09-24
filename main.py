@@ -8,11 +8,10 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import logging
 
-# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "adsdasd"
+app.secret_key = os.getenv('SECRET_KEY')
 
 # Configure caching
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
@@ -27,7 +26,7 @@ limiter = Limiter(
 
 # Configure logging
 logging.basicConfig(filename='app.log', level=logging.INFO)
-api_key='A5BaWLSzmzVqKwP637pwrZp6IBMf0MHasXrXgbrlF0pzenKg4mCIcWiuY4WeWZ1dwqGlts3kU_imzYvKlRUbzw'
+api_key=os.getenv('GENIUS_API_KEY')
 # LyricsGenius setup
 genius = lg.Genius(api_key)
 genius.remove_section_headers = True
@@ -85,4 +84,4 @@ def ratelimit_handler(e):
     return jsonify(error="Rate limit exceeded. Please try again later."), 429
 
 if __name__ == '__main__':
-    app.run(debug='True')
+    app.run()
