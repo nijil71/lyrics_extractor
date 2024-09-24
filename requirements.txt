@@ -1,0 +1,6 @@
+Flask
+lyricsgenius
+python-dotenv
+Flask-Caching
+Flask-Limiter
+gunicorn
